@@ -1,0 +1,168 @@
+openapi: 3.0.3
+info:
+  title: Twitter clone Typesript 2024
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
+
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:4000
+    description: The production API server
+tags:
+  - name: users
+    description: API related users
+paths:
+  /user/login:
+    post:
+      tags:
+        - users
+      summary: Login
+      description: User logs into systems
+      operationId: login
+      requestBody:
+        description: Login an existent user in the systems
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginBody'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Login success !'
+                  result:
+                    $ref: '#/components/schemas/SuccessAuthentication'
+        '400':
+          description: Bad request
+        '422':
+          description: Validation exception
+  /user/me:
+    get:
+      tags:
+        - users
+      summary: Imformation user
+      description: get imformation user
+      operationId: getMe
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Get me succes !'
+                  result:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '422':
+          description: Validation exception
+components:
+  schemas:
+    LoginBody:
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'userchat01@gmail.com'
+        password:
+          type: string
+          example: 'Nam813802@@'
+    SuccessAuthentication:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY3M2QzYjc5NzBmZTU0MWI1ZDg5NWRhIiwidmVyaWZ5IjoxLCJ0b2tlbl90eXBlIjowLCJpYXQiOjE3MTkzMDgyMDAsImV4cCI6MTcxOTMxMTgwMH0.t9YeCS8FLdGKxGn0Fr9LCjDwB6MRrRwqJyEetX9bry8'
+          description: Access token
+        refresh_token:
+          type: string
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjY3M2QzYjc5NzBmZTU0MWI1ZDg5NWRhIiwidmVyaWZ5IjoxLCJ0b2tlbl90eXBlIjoxLCJpYXQiOjE3MTkzMDgyMDAsImV4cCI6MTcxOTM5NDYwMH0.MTUal-wU2oeGSkCxaErUKV7fGI_wMrJb3qNu2KW8k5s'
+          description: Refresh Token
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: '6673d3b7970fe541b5d895da'
+        name:
+          type: string
+          example: 'Nam'
+        email:
+          type: string
+          example: 'userchat01@gmail.com'
+        date_of_birth:
+          type: string
+          format: date-time
+          example: '2024-04-09T02:19:01.736Z'
+        created_at:
+          type: string
+          format: date-time
+          example: '2024-06-20T07:01:11.103Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2024-06-20T07:01:11.103Z'
+        verify:
+          $ref: '#/components/schemas/UserVerifyStatus'
+        bio:
+          type: string
+          example: 'dsdasssd'
+        twitter_circle:
+          type: array
+          items:
+            type: string
+          example: ['6673d3b7970fe541b5d895dg', '6673d3b7970fe541b5d895dc']
+        location:
+          type: string
+          example: 'Thủ Đức'
+        website:
+          type: string
+          example: 'abc.com'
+        username:
+          type: string
+          example: 'user6673d3b7970fe541b5d895da'
+        avatar:
+          type: string
+          example: 'https://www.facebook.com/photo/?fbid=1969125303271173&set=a.107106286139760'
+        cover_photo:
+          type: string
+          example: 'https://www.facebook.com/photo/?fbid=1969125303271173&set=a.107106286139760'
+    UserVerifyStatus:
+      type: number
+      enum: [Unverified, Verified, Banned]
+      example: 1
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
