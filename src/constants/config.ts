@@ -1,26 +1,28 @@
 import { config } from 'dotenv'
 import path from 'path'
 import fs from 'fs'
-// const env = process.env.NODE_ENV
-const env = 'development'
+const env = process.env.NODE_ENV?.trim() || 'development'
 if (!env) {
   console.log(`Bạn chưa cung cấp biến môi trường NODE_ENV (ví dụ: development, production)`)
   console.log(`Phát hiện NODE_ENV = ${env}`)
   process.exit(1)
 }
-const envFilename = `.env.${env}`
-console.log(`envFilename: ${envFilename}`)
-console.log(`Phát hiện NODE_ENV = ${env}, vì thế app sẽ dùng file môi trường là ${envFilename}`)
-if (!fs.existsSync(path.resolve(envFilename))) {
-  console.log(`Không tìm thấy file môi trường ${envFilename}`)
+const envFilePath = `.env.${env}`
+
+console.log(`envFilename: ${envFilePath}`)
+console.log(`Phát hiện NODE_ENV = ${env}, vì thế app sẽ dùng file môi trường là ${envFilePath}`)
+
+if (!fs.existsSync(path.resolve(envFilePath))) {
+  console.log(`Không tìm thấy file môi trường ${envFilePath}`)
   console.log(`Lưu ý: App không dùng file .env, ví dụ môi trường là development thì app sẽ dùng file .env.development`)
-  console.log(`Vui lòng tạo file ${envFilename} và tham khảo nội dung ở file .env.example`)
+  console.log(`Vui lòng tạo file ${envFilePath} và tham khảo nội dung ở file .env.example`)
   process.exit(1)
 }
 
 config({
-  path: envFilename
+  path: envFilePath
 })
+
 export const isProduction = env
 // export const isProduction = env === 'production'
 

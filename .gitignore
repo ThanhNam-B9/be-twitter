@@ -1,7 +1,7 @@
 node_modules/
 dist/
-.env.develoment
 .env.production
-.env.expample
+.env.staging
+.env.development
 .env
 uploads/

@@ -29,6 +29,7 @@ import rateLimit from 'express-rate-limit'
 import followersRouter from './routers/followers.routes'
 config()
 const app = express()
+app.set('trust proxy', 1)
 // const file = fs.readFileSync(path.resolve('twitter_swagger.yaml'), 'utf8')
 // const swaggerDocument = YAML.parse(file)
 const options: swaggerJSDoc.Options = {

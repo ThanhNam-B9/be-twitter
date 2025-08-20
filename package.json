@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": " set NODE_ENV=development && npx nodemon ",
+    "dev": " SET NODE_ENV=development && npx nodemon ",
     "dev:pro": "SET NODE_ENV=production && npx nodemon ",
     "dev:stag": "SET NODE_ENV=staging && npx nodemon ",
     "build": "rimraf ./dist && tsc && tsc-alias",
-    "start": "NODE_ENV=development node dist/index.js",
+    "start": "SET NODE_ENV=development node dist/index.js",
     "start:pro": "SET NODE_ENV=production && node dist/index.js ",
     "start:stag": "SET NODE_ENV=staging && node dist/index.js ",
     "lint": "eslint .",
